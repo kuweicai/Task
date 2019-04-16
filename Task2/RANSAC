@@ -1,0 +1,35 @@
+Given:
+    data – a set of observations
+    model – a model to explain observed data points
+    n – minimum number of data points required to estimate model parameters
+    k – maximum number of iterations allowed in the algorithm
+    t – threshold value to determine data points that are fit well by model 
+    d – number of close data points required to assert that a model fits well to data
+
+Return:
+    bestFit – model parameters which best fit the data (or nul if no good model is found)
+
+iterations = 0
+bestFit = nul
+bestErr = something really large
+while iterations < k {
+    maybeInliers = n randomly selected values from data
+    maybeModel = model parameters fitted to maybeInliers
+    alsoInliers = empty set
+    for every point in data not in maybeInliers {
+        if point fits maybeModel with an error smaller than t
+             add point to alsoInliers
+    }
+    if the number of elements in alsoInliers is > d {
+        % this implies that we may have found a good model
+        % now test how good it is
+        betterModel = model parameters fitted to all points in maybeInliers and alsoInliers
+        thisErr = a measure of how well betterModel fits these points
+        if thisErr < bestErr {
+            bestFit = betterModel
+            bestErr = thisErr
+        }
+    }
+    increment iterations
+}
+return bestFit
